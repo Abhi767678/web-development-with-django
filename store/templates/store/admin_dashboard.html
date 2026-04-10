@@ -1,0 +1,82 @@
+{% extends 'store/base.html' %}
+{% block title %}Dashboard — SportZone{% endblock %}
+
+{% block content %}
+<h4 class="fw-bold mb-4"><i class="fas fa-tachometer-alt me-2 text-danger"></i>Admin Dashboard</h4>
+
+<!-- Stats Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card p-3 text-center border-start border-danger border-4">
+            <i class="fas fa-box fa-2x text-danger mb-2"></i>
+            <h4 class="fw-bold">{{ products.count }}</h4>
+            <p class="text-muted mb-0">Total Products</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center border-start border-warning border-4">
+            <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+            <h4 class="fw-bold">{{ pending_orders }}</h4>
+            <p class="text-muted mb-0">Pending Orders</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center border-start border-success border-4">
+            <i class="fas fa-shopping-bag fa-2x text-success mb-2"></i>
+            <h4 class="fw-bold">{{ total_orders }}</h4>
+            <p class="text-muted mb-0">Total Orders</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center border-start border-info border-4">
+            <i class="fas fa-users fa-2x text-info mb-2"></i>
+            <h4 class="fw-bold">{{ total_users }}</h4>
+            <p class="text-muted mb-0">Customers</p>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Links -->
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card p-4 text-center h-100">
+            <i class="fas fa-box-open fa-3x text-danger mb-3"></i>
+            <h6 class="fw-bold">Manage Products</h6>
+            <p class="text-muted small">Add, edit or delete products</p>
+            <a href="{% url 'admin_products' %}" class="btn btn-primary mt-auto">Go to Products</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center h-100">
+            <i class="fas fa-shopping-bag fa-3x text-warning mb-3"></i>
+            <h6 class="fw-bold">Manage Orders</h6>
+            <p class="text-muted small">View and update order status</p>
+            <a href="{% url 'admin_orders' %}" class="btn btn-primary mt-auto">Go to Orders</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center h-100">
+            <i class="fas fa-users fa-3x text-info mb-3"></i>
+            <h6 class="fw-bold">Manage Users</h6>
+            <p class="text-muted small">View and activate/deactivate users</p>
+            <a href="{% url 'admin_users' %}" class="btn btn-primary mt-auto">Go to Users</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center h-100">
+            <i class="fas fa-tags fa-3x text-danger mb-3"></i>
+            <h6 class="fw-bold">Manage Categories</h6>
+            <p class="text-muted small">Add, edit or delete categories</p>
+            <a href="{% url 'admin_categories' %}" class="btn btn-primary mt-auto">Go to Categories</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center h-100">
+            <i class="fas fa-copyright fa-3x text-secondary mb-3"></i>
+            <h6 class="fw-bold">Manage Brands</h6>
+            <p class="text-muted small">Add, edit or delete brands</p>
+            <a href="{% url 'admin_brands' %}" class="btn btn-primary mt-auto">Go to Brands</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

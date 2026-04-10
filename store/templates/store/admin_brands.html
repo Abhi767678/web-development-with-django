@@ -1,0 +1,74 @@
+{% extends 'store/base.html' %}
+{% block title %}Brands — Admin{% endblock %}
+
+{% block content %}
+<h4 class="fw-bold mb-4"><i class="fas fa-copyright me-2 text-danger"></i>Manage Brands</h4>
+
+<div class="row">
+    <!-- Add Brand Form -->
+    <div class="col-md-4">
+        <div class="card p-4 mb-4">
+            <h6 class="fw-bold mb-3">Add New Brand</h6>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-plus me-1"></i>Add Brand
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Brands List -->
+    <div class="col-md-8">
+        <div class="card p-3">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Brand Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for brand in brands %}
+                    <tr>
+                        <td>{{ brand.id }}</td>
+                        <td class="fw-semibold">{{ brand.brand_name }}</td>
+                        <td class="text-muted small">{{ brand.description|default:"—" }}</td>
+                        <td>
+                            <a href="{% url 'admin_edit_brand' brand.pk %}"
+                               class="btn btn-sm btn-outline-primary me-1">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'admin_delete_brand' brand.pk %}"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Delete this brand?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">No brands yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary mt-3">
+    <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+</a>
+{% endblock %}

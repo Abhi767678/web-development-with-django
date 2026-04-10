@@ -1,0 +1,66 @@
+{% extends 'store/base.html' %}
+{% block title %}Users — Admin{% endblock %}
+
+{% block content %}
+<h4 class="fw-bold mb-4"><i class="fas fa-users me-2 text-danger"></i>Manage Users</h4>
+
+<div class="card p-3">
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td class="fw-semibold">{{ u.username }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.phone|default:"—" }}</td>
+                <td>
+                    <span class="badge {% if u.is_superuser %}bg-danger{% elif u.role == 'admin' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                        {% if u.is_superuser %}Superuser{% else %}{{ u.role }}{% endif %}
+                    </span>
+                </td>
+                <td>{{ u.date_joined|date:"d M Y" }}</td>
+                <td>
+                    {% if u.is_active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if u != request.user %}
+                    <a href="{% url 'admin_toggle_user' u.pk %}"
+                       class="btn btn-sm {% if u.is_active %}btn-outline-danger{% else %}btn-outline-success{% endif %}"
+                       onclick="return confirm('{% if u.is_active %}Deactivate{% else %}Activate{% endif %} this user?')">
+                        {% if u.is_active %}
+                            <i class="fas fa-ban me-1"></i>Deactivate
+                        {% else %}
+                            <i class="fas fa-check me-1"></i>Activate
+                        {% endif %}
+                    </a>
+                    {% else %}
+                        <span class="text-muted small">You</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8" class="text-center text-muted">No users found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary mt-3">
+    <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+</a>
+{% endblock %}
